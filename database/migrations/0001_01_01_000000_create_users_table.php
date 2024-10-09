@@ -11,13 +11,38 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('postes', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
+            $table->string('libelle');
+            $table->string('description');
+            $table->timestamps();
+        });
+
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('matricule')->unique();
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('date_naiss');
+            $table->string('num_cin');
             $table->string('email')->unique();
             $table->string('contact');
-            $table->boolean('is_employe')->default(false);
+            $table->string('situation_mat');
+            $table->string('nombre_enf');
             $table->timestamp('date_embauche')->default(now());
+            $table->string('numero_cnaps');
+            $table->string('numero_omsi');
+            $table->string('banque');
+            $table->string('num_compte_bancaire');
+            $table->string('salaires_brut');
+            $table->string('photo');
+
+            $table->unsignedBigInteger('poste_id')->nullable();
+            $table->foreign('poste_id')->references('id')->on('postes')->onDelete('cascade');
+
+
+            $table->boolean('is_employe')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
@@ -45,6 +70,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('postes');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

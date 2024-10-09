@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Poste;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,6 +14,9 @@ class UserSeed extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        $postes =   Poste::factory(10)->create();
+        User::factory(10)->create([
+            'poste_id' => $postes->random()->id,
+        ]);
     }
 }
