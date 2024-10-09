@@ -17,12 +17,24 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'matricule',
         'nom',
+        'prenom',
+        'date_naiss',
+        'num_cin',
         'email',
-        'password',
         'contact',
-        'is_employe',
+        'situation_mat',
+        'nombre_enf',
         'date_embauche',
+        'numero_cnaps',
+        'numero_omsi',
+        'banque',
+        'num_compte_bancaire',
+        'salaires_brut',
+        'photo',
+        'is_employe',
+        'poste_id',
     ];
 
     /**
@@ -34,6 +46,14 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function fichiers(){
+        return $this->hasMany(Fichier::class);
+    }
+
+    public function postes(){
+        return $this->belongsTo(Poste::class);
+    }
 
     /**
      * Get the attributes that should be cast.
