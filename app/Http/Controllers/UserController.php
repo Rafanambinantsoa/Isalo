@@ -88,7 +88,7 @@ class UserController extends Controller
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'date_naiss' => ['required', 'date'],
-            'num_cin' => ['required', 'string', 'max:255'],
+            'num_cin' => ['required', 'string', 'size:12', 'regex:/^[0-9]+$/'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'contact' => ['required', 'string', 'max:255'],
             'situation_mat' => ['required', 'string', 'max:255'],
