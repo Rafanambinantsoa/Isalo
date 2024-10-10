@@ -35,6 +35,7 @@ class User extends Authenticatable
         'photo',
         'is_employe',
         'poste_id',
+        'password',
     ];
 
     /**

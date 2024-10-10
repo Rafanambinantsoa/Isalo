@@ -35,7 +35,7 @@ return new class extends Migration
             $table->string('numero_omsi');
             $table->string('banque');
             $table->string('num_compte_bancaire');
-            $table->string('salaires_brut');
+            $table->bigInteger('salaires_brut');
             $table->string('photo');
 
             $table->unsignedBigInteger('poste_id')->nullable();
@@ -44,7 +44,7 @@ return new class extends Migration
 
             $table->boolean('is_employe')->default(false);
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
