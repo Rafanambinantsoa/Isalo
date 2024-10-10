@@ -24,6 +24,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->midd
 
 //Related route for users
 Route::resource('users', UserController::class)->middleware('auth:sanctum');
+Route::post('/employee/add/', [UserController::class, 'store']);
 
 //Related route for poste
 Route::resource('postes', PosteController::class)->middleware('auth:sanctum');
