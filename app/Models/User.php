@@ -56,6 +56,10 @@ class User extends Authenticatable
         return $this->belongsTo(Poste::class);
     }
 
+    public function conges(){
+        return $this->hasMany(Conger::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *
