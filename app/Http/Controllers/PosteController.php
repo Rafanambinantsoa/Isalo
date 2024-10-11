@@ -95,4 +95,14 @@ class PosteController extends Controller
         $poste->delete();
         return response()->json(['message' => 'Poste deleted successfully'], 200);
     }
+
+    public function getListEmployeeByPoste($id)
+    {
+        $poste = Poste::find($id);
+        if (!$poste) {
+            return response()->json(['message' => 'Poste not found'], 404);
+        }
+        $employees = $poste->user;
+        return response()->json($employees);
+    }
 }

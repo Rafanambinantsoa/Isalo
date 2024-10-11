@@ -28,6 +28,7 @@ Route::post('/employee/add/', [UserController::class, 'store']);
 
 //Related route for poste
 Route::resource('postes', PosteController::class)->middleware('auth:sanctum');
+Route::get('/postes/employee/{id}', [PosteController::class, 'getListEmployeeByPoste']);
 
 //test
 Route::get('/test-email', function () {
