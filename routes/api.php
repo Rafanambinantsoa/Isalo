@@ -4,7 +4,9 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CongerController;
 use App\Http\Controllers\PosteController;
+use App\Http\Controllers\TypeCongerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -29,6 +31,11 @@ Route::post('/employee/add/', [UserController::class, 'store']);
 //Related route for poste
 Route::resource('postes', PosteController::class)->middleware('auth:sanctum');
 Route::get('/postes/employee/{id}', [PosteController::class, 'getListEmployeeByPoste']);
+
+//Related route for type_conger
+Route::resource('congers' , CongerController::class);
+Route::resource('type_congers', TypeCongerController::class);
+Route::patch('/congers/{id}/accept', [CongerController::class, 'acceptConger']);
 
 //test
 Route::get('/test-email', function () {

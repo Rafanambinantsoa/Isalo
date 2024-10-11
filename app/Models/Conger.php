@@ -18,6 +18,6 @@ class Conger extends Model
 
     public function typeConge()
     {
-        return $this->belongsTo(TypeConge::class);
+        return $this->belongsTo(typeConger::class);
     }
 }

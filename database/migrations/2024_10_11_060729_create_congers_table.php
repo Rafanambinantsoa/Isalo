@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('types_conges', function (Blueprint $table) {
+        Schema::create('type_congers', function (Blueprint $table) {
             $table->id(); // Clé primaire
-            $table->string('nom'); // Nom du type de congé
+            $table->string('nom');
+            $table->string('libelle'); // Nom du type de congé
             $table->text('description')->nullable(); // Description du type de congé
-            $table->integer('nombre_jours_max'); // Nombre maximum de jours permis
             $table->timestamps(); // Colonnes created_at et updated_at
         });
 
         Schema::create('congers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Référence à l'employé
-            $table->foreignId('type_conge_id')->constrained('types_conges')->onDelete('cascade'); // Référence au type de congé
+            $table->unsignedBigInteger('type_conge_id');
+            $table->foreign('type_conge_id')->references('id')->on('type_congers')->onDelete('cascade'); // Référence au type de congé
             $table->date('date_debut'); // Date de début du congé
             $table->date('date_fin'); // Date de fin du congé
             $table->integer('nombre_jours'); // Nombre de jours de congé
@@ -40,7 +41,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('types_conges');
+        Schema::dropIfExists('type_congers');
         Schema::dropIfExists('congers');
     }
 };
