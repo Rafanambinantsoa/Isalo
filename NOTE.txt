@@ -1,1 +1,6 @@
-Update User Tsy mety 
+Dans les dates ajoute de validation genre pas de date pssee queque chose dans le genre 
+Entre le debut et la fin  ,  akout une sorte de coherence
+Nombre de jour ( automatiquement , avec certains  valeur genre par rapports au date precedent )
+
+
+Pour toute les route put ou patch , tu pourrais genre mettre une sorte de condition s'il veullent tout simplement changer une seule chose  ,  adapte ton api pour ca  stp

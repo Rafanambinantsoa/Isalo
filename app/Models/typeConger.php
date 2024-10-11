@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TypeConge extends Model
+class typeConger extends Model
 {
     use HasFactory;
 
@@ -13,7 +13,7 @@ class TypeConge extends Model
     protected $fillable = [
         'nom',
         'description',
-        'nombre_jours_max',
+        'libelle'
     ];
 
     /**
@@ -23,6 +23,6 @@ class TypeConge extends Model
      */
     public function conges()
     {
-        return $this->hasMany(Conger::class, 'type_conge_id');
+        return $this->hasMany(Conger::class, 'type_conges_id');
     }
 }
