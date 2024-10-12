@@ -36,6 +36,7 @@ class User extends Authenticatable
         'is_employe',
         'poste_id',
         'password',
+        'nombre_jours_conges'
     ];
 
     /**

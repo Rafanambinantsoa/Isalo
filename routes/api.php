@@ -32,7 +32,7 @@ Route::post('/employee/add/', [UserController::class, 'store']);
 Route::resource('postes', PosteController::class)->middleware('auth:sanctum');
 Route::get('/postes/employee/{id}', [PosteController::class, 'getListEmployeeByPoste']);
 
-//Related route for type_conger
+//Related route for conger
 Route::resource('congers' , CongerController::class);
 Route::resource('type_congers', TypeCongerController::class);
 Route::patch('/congers/{id}/accept', [CongerController::class, 'acceptConger']);

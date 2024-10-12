@@ -37,6 +37,7 @@ class TypeCongerController extends Controller
             'nom' => ['required', 'string' , 'unique:type_congers'],
             'libelle' => ['required', 'string'],
             'description' => ['required', 'string'],
+            'duree' => ['required', 'numeric'],
         ]);
 
         if ($validator->fails()) {
@@ -82,6 +83,7 @@ class TypeCongerController extends Controller
             'nom' => ['required', 'string'],
             'libelle' => ['required', 'string'],
             'description' => ['required', 'string'],
+            'duree' => ['required', 'numeric'],
         ]);
     
         if ($validator->fails()) {
@@ -93,6 +95,7 @@ class TypeCongerController extends Controller
             'nom' => $request->nom,
             'libelle' => $request->libelle,
             'description' => $request->description,
+            'duree' => $request->duree
         ]);
         $typeConge->save();
 

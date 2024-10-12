@@ -13,7 +13,8 @@ class typeConger extends Model
     protected $fillable = [
         'nom',
         'description',
-        'libelle'
+        'libelle',
+        'duree',
     ];
 
     /**

@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('num_compte_bancaire');
             $table->bigInteger('salaires_brut');
             $table->string('photo');
+            $table->integer('nombre_jours_conges')->default(60);
 
             $table->unsignedBigInteger('poste_id')->nullable();
             $table->foreign('poste_id')->references('id')->on('postes')->onDelete('cascade');
