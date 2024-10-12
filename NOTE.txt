@@ -4,3 +4,34 @@ Nombre de jour ( automatiquement , avec certains  valeur genre par rapports au d
 
 
 Pour toute les route put ou patch , tu pourrais genre mettre une sorte de condition s'il veullent tout simplement changer une seule chose  ,  adapte ton api pour ca  stp
+
+
+Lors de l'acceptation du demande de conger  , on doit mettre a joutr le nombre de jour de conger 
+et ajouter une sorte de limite de demande en matiere de jour
+
+Mise a jour dans la partie  ty de conger en ajoutant dun attribus nombre de jour max autoriser pour le type de conger selectionner 
+
+Un conger accepter ne pourrait plus etre modifier 
+
+Lors de la creation  d'un conger on doit donner aux admin de lui donner le choix gerne un conger specifique  genre il met en place tape lui meme  le nombre de jour ou bien juste en choisir un et on verra 
+il veut ecrire manuelement le nombre de jours de conger ou bien en choisir ce que est deja c'est a dire le
+les type de conger deja dispo
+
+Si l'user se penche vers la solution specifique , dans l'acceptation on devrait mettre une sorte de validation pour ca  : 
+genre on vas mettre par defaut  l'id  0 du type 
+
+DEV FRONT 
+Raha specifique de specifique de mametraka date de debut sy fin , 
+Sinon miselectionne  @ le liste  anle typeconge de  asina date de debut vue que tsy tode mand automatique le  date de fin par rapports  @ le  isan daty ao 
+
+
+A faire demain 
+
+Refa misy conger valider en cours   ,  normalement tsy tokony afaka manao demande conger 
+
+Les congers valider ne devrait etre pas modifiables 
+
+Un fois les conger terminer on les met dans une autre table la ou ils vont etre historises 
+
+
+

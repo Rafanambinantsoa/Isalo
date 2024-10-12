@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id(); // Clé primaire
             $table->string('nom');
             $table->string('libelle'); // Nom du type de congé
-            $table->text('description')->nullable(); // Description du type de congé
+            $table->bigInteger('duree'); // Description du type de congé
+            $table->text('description')->nullable();
             $table->timestamps(); // Colonnes created_at et updated_at
         });
 

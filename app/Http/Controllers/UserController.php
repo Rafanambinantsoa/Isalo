@@ -47,6 +47,7 @@ class UserController extends Controller
             'salaires_brut' => ['required', 'numeric'],
             'photo' => ['required', 'mimes:jpeg,png,jpg'],
             'poste_id' => ['required', 'numeric'],
+            'nombre_jours_conges' => ['required', 'numeric'],
             // 'password' => ['required', 'string', 'max:255'],
         ]);
 
@@ -76,6 +77,7 @@ class UserController extends Controller
                 'salaires_brut' => $request->salaires_brut,
                 'photo' => $filename,
                 'poste_id' => $request->poste_id,
+                'nombre_jours_conges' => $request->nombre_jours_conges,
                 // 'password' => Hash::make($request->password),
             ]);
             return response()->json($user, 201);

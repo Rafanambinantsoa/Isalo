@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Conger;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -138,6 +139,7 @@ class CongerController extends Controller
         return response()->json(['message' => 'Conger deleted successfully'], 200);
     }
 
+
     public function acceptConger($id){
         $conger = Conger::find($id);
         if (!$conger) {
@@ -147,10 +149,32 @@ class CongerController extends Controller
         if ($conger->statut == 'accepte') {
             return response()->json(['message' => 'Conger already accepted'], 400);
         }
+        //recheche de l'employé
+        $user=  User::find($conger->user_id);
+        //Verification si le type de conger est specifique 
+        if ($conger->type_conge_id == 1) {
+            $user->nombre_jours_conges = $user->nombre_jours_conges - $conger->nombre_jours;
+            $user->save();
 
-        $conger->update([
-            'statut' => 'accepte',
-        ]);
-        return response()->json($conger, 200);
+            $conger->statut = 'accepte';
+            $conger->save();
+            return response()->json(['message' => 'Conger accepted successfully'], 200);
+        }
+
+        //Mise a jour du jour de conger restant
+        // recherche de l'employé pour avoir son jour restant et le mettre à jour
+        $nombreJoursTypeConger = $conger->typeConge->duree;
+
+        $disponible = $user->nombre_jours_conges;
+
+        if ($disponible < $nombreJoursTypeConger) {
+            return response()->json(['message' => 'Not enough days left'], 400);
+        }
+
+        $user->nombre_jours_conges = $user->nombre_jours_conges - $nombreJoursTypeConger;
+        $user->save();
+        $conger->statut = 'accepte';
+        $conger->save();
+        return response()->json(['message' => 'Conger accepted successfully'], 200);
     }
 }
