@@ -42,6 +42,8 @@ return new class extends Migration
             $table->unsignedBigInteger('poste_id')->nullable();
             $table->foreign('poste_id')->references('id')->on('postes')->onDelete('cascade');
 
+            $table->boolean('est_en_conge')->default(false);
+
 
             $table->boolean('is_employe')->default(false);
             $table->timestamp('email_verified_at')->nullable();
