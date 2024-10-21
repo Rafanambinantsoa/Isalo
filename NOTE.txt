@@ -35,3 +35,6 @@ Un fois les conger terminer on les met dans une autre table la ou ils vont etre 
 
 
 
+
+CRON 
+Mise a jour automatique  de l'attributs   est_en_conger ( )  ,  une fois la date depasseer  ( conger  ) 

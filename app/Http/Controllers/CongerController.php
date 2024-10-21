@@ -142,6 +142,8 @@ class CongerController extends Controller
 
     public function acceptConger($id){
         $conger = Conger::find($id);
+
+        // dd($conger);
         if (!$conger) {
             return response()->json(['message' => 'Conger not found'], 404);
         }
@@ -151,9 +153,23 @@ class CongerController extends Controller
         }
         //recheche de l'employé
         $user=  User::find($conger->user_id);
+
+        //Verification si l'employe a deja un conger en cours
+        if ($user->est_en_conge == 1) {
+            return response()->json(['message' => "L'employé a un conger en cours"], 400);
+        }
+
+        // Si le nombre de conger annuel est atteint
+        if ($user->nombre_jours_conges == 0) {
+          return response()->json(['message' => 'No conger available'], 400);   
+        }
+
+
         //Verification si le type de conger est specifique 
         if ($conger->type_conge_id == 1) {
             $user->nombre_jours_conges = $user->nombre_jours_conges - $conger->nombre_jours;
+            //Mise a jour de l'etat de l'employé en statut en cours de conger
+            $user->est_en_conge = 1;
             $user->save();
 
             $conger->statut = 'accepte';
@@ -172,9 +188,13 @@ class CongerController extends Controller
         }
 
         $user->nombre_jours_conges = $user->nombre_jours_conges - $nombreJoursTypeConger;
+        //Mise a jour de l'etat de l'employé en statut en cours de conger
+        $user->est_en_conge = 1;
         $user->save();
         $conger->statut = 'accepte';
         $conger->save();
+
+
         return response()->json(['message' => 'Conger accepted successfully'], 200);
     }
 }
