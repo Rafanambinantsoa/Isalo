@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CongerController;
 use App\Http\Controllers\PosteController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\TypeCongerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -46,3 +47,5 @@ Route::get('/test-email', function () {
     
     return 'Email sent!';
 });
+Route::get('/test' , [TestController::class , 'index']);
+
