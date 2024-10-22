@@ -38,3 +38,8 @@ Un fois les conger terminer on les met dans une autre table la ou ils vont etre 
 
 CRON 
 Mise a jour automatique  de l'attributs   est_en_conger ( )  ,  une fois la date depasseer  ( conger  ) 
+
+Now 
+
+
+Test avec le PC d'un autre demain le cron qui everyMinute , ok  ?  
