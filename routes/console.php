@@ -10,4 +10,4 @@ use Illuminate\Support\Facades\Schedule;
 //     $this->comment('Mise a jour automatique  de l\'attributs   est_en_conger ( )  ,  une fois la date depasseer  ( conger  ) ');
 // })->everyMinute();
 
-Schedule::command('app:mise-ajour-conger-employee-status')->everyMinute();
+Schedule::command('app:mise-ajour-conger-employee-status')->daily();
