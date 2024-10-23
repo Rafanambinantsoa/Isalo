@@ -43,3 +43,18 @@ Now
 
 
 Test avec le PC d'un autre demain le cron qui everyMinute , ok  ?  
+done 
+
+Emprunt
+- Employe 
+- Type
+- Montant
+- Date
+- Nombre de remboursement
+- Montant remboursement mensuel
+- Description
+
+Avance 
+- Montant
+- Date 
+- Description

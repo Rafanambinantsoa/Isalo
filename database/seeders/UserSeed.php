@@ -2,10 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Fournisseur;
+use App\Models\Paiment;
 use App\Models\Poste;
 use App\Models\typeConger;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeed extends Seeder
@@ -15,6 +16,12 @@ class UserSeed extends Seeder
      */
     public function run(): void
     {
+        //Factory paiments
+        Paiment::factory(10)->create();
+
+        //Factory type fournisseurs
+        Fournisseur::factory(10)->create();
+
         typeConger::factory()->create([
             'nom' => 'Specifique',
             'libelle' => 'Specifique',
@@ -39,7 +46,7 @@ class UserSeed extends Seeder
             'description' => 'Annuele',
             'duree' => 30,
         ]);
-        $postes =   Poste::factory(10)->create();
+        $postes = Poste::factory(10)->create();
         User::factory(10)->create([
             'poste_id' => $postes->random()->id,
         ]);
