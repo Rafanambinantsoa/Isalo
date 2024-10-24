@@ -58,3 +58,6 @@ Avance
 - Montant
 - Date 
 - Description
+
+
+Attirubut paiments insuffisant  A VERIFIER 
