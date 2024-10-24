@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Categorie;
 use App\Models\Fournisseur;
 use App\Models\Paiment;
 use App\Models\Poste;
@@ -16,6 +17,9 @@ class UserSeed extends Seeder
      */
     public function run(): void
     {
+        //Categorie produit
+        Categorie::factory(10)->create();
+
         //Factory paiments
         Paiment::factory(10)->create();
 
