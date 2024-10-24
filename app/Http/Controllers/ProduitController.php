@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categorie;
 use App\Models\Produit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -107,5 +108,16 @@ class ProduitController extends Controller
         }
         $produit->delete();
         return response()->json(['message' => 'Produit deleted successfully'], 200);
+    }
+
+    public function getProduitByCategorie($id)
+    {
+        $categorie = Categorie::find($id);
+
+        if (!$categorie) {
+            return response()->json(['message' => 'Categorie not found'], 404);
+        }
+        $data = $categorie->produits;
+        return response()->json($data);
     }
 }

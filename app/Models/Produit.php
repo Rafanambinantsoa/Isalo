@@ -17,4 +17,9 @@ class Produit extends Model
         'prix',
         'fournisseur_id',
     ];
+
+    public function categorie()
+    {
+        return $this->belongsTo(Categorie::class);
+    }
 }

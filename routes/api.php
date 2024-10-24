@@ -49,6 +49,7 @@ Route::resource('paiments', MethodePaimentController::class);
 
 //Related route  For produit
 Route::resource('categorie', CategorieController::class);
+Route::get('/categorie/{id}/produits', [ProduitController::class, 'getProduitByCategorie']);
 Route::resource('produits', ProduitController::class);
 //test
 Route::get('/test-email', function () {
