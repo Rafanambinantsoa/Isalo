@@ -6,6 +6,7 @@ use App\Models\Categorie;
 use App\Models\Fournisseur;
 use App\Models\Paiment;
 use App\Models\Poste;
+use App\Models\Produit;
 use App\Models\typeConger;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -17,14 +18,15 @@ class UserSeed extends Seeder
      */
     public function run(): void
     {
-        //Categorie produit
-        Categorie::factory(10)->create();
-
         //Factory paiments
         Paiment::factory(10)->create();
 
         //Factory type fournisseurs
         Fournisseur::factory(10)->create();
+
+        //Categorie produit
+        Categorie::factory(10)->create();
+        Produit::factory(10)->create();
 
         typeConger::factory()->create([
             'nom' => 'Specifique',

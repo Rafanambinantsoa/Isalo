@@ -9,6 +9,7 @@ use App\Http\Controllers\CongerController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\MethodePaimentController;
 use App\Http\Controllers\PosteController;
+use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TypeCongerController;
 use App\Http\Controllers\UserController;
@@ -48,6 +49,8 @@ Route::resource('paiments', MethodePaimentController::class);
 
 //Related route  For produit
 Route::resource('categorie', CategorieController::class);
+Route::get('/categorie/{id}/produits', [ProduitController::class, 'getProduitByCategorie']);
+Route::resource('produits', ProduitController::class);
 //test
 Route::get('/test-email', function () {
     Mail::raw('Test email body', function ($message) {

@@ -58,3 +58,30 @@ Avance
 - Montant
 - Date 
 - Description
+
+
+Attirubut paiments insuffisant  A VERIFIER 
+
+Gerer les uploads  de plusieurs pieces jointes
+
+
+Pour la table paiement, voici les attributs que tu devrais inclure pour bien suivre les transactions financières avec les fournisseurs :
+
+ID_Paiement : Identifiant unique du paiement (de type Integer).
+Fournisseur_ID : Référence à l'identifiant du fournisseur lié à ce paiement (de type Integer).
+Montant : Montant total du paiement effectué (de type Decimal).
+Mode_de_paiement : Le mode de paiement utilisé (espèces, mobile money, crédit, etc.) (de type Enum).
+Date_Paiement : La date à laquelle le paiement a été effectué (de type DateTime).
+Date_Remoursement : Si c'est un crédit, la date de remboursement (de type DateTime), sinon peut rester nul.
+Statut_Paiement : Statut du paiement (payé, partiellement payé, non payé) (de type Enum).
+Explication des attributs :
+ID_Paiement : Sert à identifier chaque transaction de paiement de manière unique.
+Fournisseur_ID : Relie chaque paiement à un fournisseur spécifique pour un suivi détaillé.
+Montant : Le montant que tu as payé ou que tu dois encore payer au fournisseur.
+Mode_de_paiement : Précise si le paiement est en espèces, par virement bancaire, à crédit, etc.
+Date_Paiement : La date précise du paiement.
+Date_Remoursement : Si le paiement est à crédit, elle indique la date prévue ou réelle du remboursement.
+Statut_Paiement : Te permet de savoir si le paiement a été entièrement réglé ou s'il reste dû.
+Avec ces attributs, ta table de paiement sera bien structurée et te permettra de suivre les paiements de manière efficace et transparente.
+
+A FAIRE CE SOIR 
