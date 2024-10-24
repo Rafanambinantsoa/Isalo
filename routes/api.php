@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CongerController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\MethodePaimentController;
@@ -44,6 +45,9 @@ Route::resource('fournisseurs', FournisseurController::class);
 
 //Related route for Methode paiment  fournisseur
 Route::resource('paiments', MethodePaimentController::class);
+
+//Related route  For produit
+Route::resource('categorie', CategorieController::class);
 //test
 Route::get('/test-email', function () {
     Mail::raw('Test email body', function ($message) {
