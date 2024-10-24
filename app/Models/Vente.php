@@ -15,4 +15,9 @@ class Vente extends Model
         'mode_paiment',
         'date_paiement',
     ];
+
+    public function venteProduits()
+    {
+        return $this->hasMany(VenteProduit::class);
+    }
 }
