@@ -13,6 +13,7 @@ use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TypeCongerController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VenteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
@@ -51,6 +52,10 @@ Route::resource('paiments', MethodePaimentController::class);
 Route::resource('categorie', CategorieController::class);
 Route::get('/categorie/{id}/produits', [ProduitController::class, 'getProduitByCategorie']);
 Route::resource('produits', ProduitController::class);
+
+//Related route for vente
+Route::resource('ventes', VenteController::class);
+
 //test
 Route::get('/test-email', function () {
     Mail::raw('Test email body', function ($message) {
