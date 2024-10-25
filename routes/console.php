@@ -11,3 +11,4 @@ use Illuminate\Support\Facades\Schedule;
 // })->everyMinute();
 
 Schedule::command('app:mise-ajour-conger-employee-status')->daily();
+Schedule::command('app:alert-produit-insuffisant')->daily();
