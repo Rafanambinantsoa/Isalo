@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Conger;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class TestController extends Controller
 {
@@ -40,5 +41,53 @@ class TestController extends Controller
         }
 
         return response()->json("ok");
+    }
+    // public function multiUpload(Request $request)
+    // {
+    //     $request->validate([
+    //         'files.*' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048', // Adjust the validation rules as needed
+    //     ]);
+
+    //     $filePaths = [];
+    //     foreach ($request->file('files') as $file) {
+    //         $path = $file->store('uploads', 'public');
+    //         $filePaths[] = $path;
+
+    //         // // Save file info in the database
+    //         // Upload::create([
+    //         //     'file_name' => $file->getClientOriginalName(),
+    //         //     'file_path' => $path,
+    //         // ]);
+    //     }
+
+    //     return response()->json(['file_paths' => $filePaths], 200);
+    //
+    public function multiUpload(Request $request)
+    {
+        // $request->validate([ // Commenter la validation pour le test
+        //     'files.*' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        // ]);
+
+        if (!$request->hasFile('files')) {
+            return response()->json(['error' => 'No files were uploaded.'], 400);
+        }
+
+        $filePaths = [];
+        foreach ($request->file('files') as $file) {
+            if ($file->isValid()) { // Vérifier si le fichier est valide
+                $path = $file->store('uploads', 'public');
+                $filePaths[] = $path;
+
+                // Sauvegarde dans la base de données (décommenter si nécessaire)
+                // Upload::create([
+                //     'file_name' => $file->getClientOriginalName(),
+                //     'file_path' => $path,
+                // ]);
+            } else {
+                return response()->json(['error' => 'Invalid file uploaded.'], 400);
+            }
+        }
+
+        return response()->json(['file_paths' => $filePaths], 200);
     }
 }

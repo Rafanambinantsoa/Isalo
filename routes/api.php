@@ -66,3 +66,4 @@ Route::get('/test-email', function () {
     return 'Email sent!';
 });
 Route::get('/test', [TestController::class, 'index']);
+Route::post('/uploads', [TestController::class, 'multiUpload']);
