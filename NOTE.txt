@@ -95,3 +95,9 @@ dans le stock ,  genre si on le diminue le stock devrait augmenter  et vice - ve
 A faire demain : 
 
  - reapprovisionnement  ( Fournisseur )
+
+
+ Nombre de postes
+ Nombre Employe ( ankoatra admin )
+ nbre conger 
+ 

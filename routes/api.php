@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApprovisionnementController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -53,6 +54,9 @@ Route::resource('produits', ProduitController::class);
 
 //Related route for vente
 Route::resource('ventes', VenteController::class);
+
+// Related route for Stock
+Route::resource('stocks', ApprovisionnementController::class);
 
 // //test
 // Route::get('/test-email', function () {

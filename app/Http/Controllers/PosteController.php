@@ -17,7 +17,7 @@ class PosteController extends Controller
         // check if its empty
         if ($postes->isEmpty()) {
             return response()->json(['message' => 'No postes found (vide) '], 404);
-        } 
+        }
         return response()->json($postes);
     }
 
@@ -79,8 +79,8 @@ class PosteController extends Controller
             'libelle' => ['required', 'string'],
             'description' => ['required', 'string'],
         ]);
-            $poste->update($validator);
-            return response()->json($poste, 200);
+        $poste->update($validator);
+        return response()->json($poste, 200);
     }
 
     /**

@@ -5,7 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Approvisionnemet extends Model
+class Approvisionnement extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'fournisseur_id',
+        'montant_approvisionnement',
+    ];
 }
