@@ -203,4 +203,13 @@ class VenteController extends Controller
         ], 200);
 
     }
+
+    public function approvisionnementStock(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'produits' => 'required',
+            'montant' => 'required|numeric',
+            'founrnisseur_id' => 'required',
+        ]);
+    }
 }

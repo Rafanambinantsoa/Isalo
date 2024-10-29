@@ -15,7 +15,7 @@ class CongerController extends Controller
      */
     public function index()
     {
-        $congers = Conger::all();
+        $congers = Conger::with('user', 'typeConge')->get();
         // check if its empty
         if ($congers->isEmpty()) {
             return response()->json(['message' => 'No congers found (vide) '], 404);

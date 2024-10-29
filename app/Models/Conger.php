@@ -13,11 +13,11 @@ class Conger extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }
 
     public function typeConge()
     {
-        return $this->belongsTo(typeConger::class);
+        return $this->belongsTo(typeConger::class,'type_conge_id');
     }
 }
