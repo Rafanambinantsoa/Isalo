@@ -106,6 +106,11 @@ class ProduitController extends Controller
         if (!$produit) {
             return response()->json(['message' => 'Produit not found'], 404);
         }
+
+        if ($produit->quantite > 0) {
+            return response()->json(['message' => 'Le produit ne peut pas etre supprimé car il y en a dans le stock'], 400);
+        }
+
         $produit->delete();
         return response()->json(['message' => 'Produit deleted successfully'], 200);
     }
