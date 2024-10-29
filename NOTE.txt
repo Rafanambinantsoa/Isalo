@@ -90,8 +90,8 @@ Pour la mise a jour des ventes il faut que ce soit synchrone au quantite
 dans le stock ,  genre si on le diminue le stock devrait augmenter  et vice - versa 
 
 
+ - Multiple uploads (  Les pieces ) done 
 
 A faire demain : 
 
  - reapprovisionnement  ( Fournisseur )
- - Multiple uploads (  Les pieces )
