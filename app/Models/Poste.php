@@ -15,7 +15,6 @@ class Poste extends Model
         'description',
     ];
 
-
     public function user()
     {
         return $this->hasMany(User::class);

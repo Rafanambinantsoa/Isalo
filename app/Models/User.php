@@ -50,15 +50,18 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function fichiers(){
+    public function fichiers()
+    {
         return $this->hasMany(Fichier::class);
     }
 
-    public function postes(){
-        return $this->belongsTo(Poste::class);
+    public function postes()
+    {
+        return $this->belongsTo(Poste::class, 'poste_id');
     }
 
-    public function conges(){
+    public function conges()
+    {
         return $this->hasMany(Conger::class);
     }
 
