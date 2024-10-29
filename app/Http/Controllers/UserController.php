@@ -55,7 +55,7 @@ class UserController extends Controller
 
         }
         if (!$request->hasFile('files')) {
-            return response()->json(['error' => 'No files were uploaded.'], 400);
+            return response()->json(['error' => 'Pieces jointes manquantes'], 400);
         }
 
         //gener l'upload de l'image
@@ -93,7 +93,6 @@ class UserController extends Controller
             ]);
         }
         return response()->json([$user, $filePaths], 201);
-
     }
 
     /**
