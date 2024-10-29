@@ -19,7 +19,7 @@ class CongerController extends Controller
         // check if its empty
         if ($congers->isEmpty()) {
             return response()->json(['message' => 'No congers found (vide) '], 404);
-        } 
+        }
         return response()->json($congers);
     }
 
@@ -37,17 +37,17 @@ class CongerController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => ['required', 'string'],
+            'user_id' => ['required', 'numeric', 'exists:users,id'],
             'type_conger_id' => ['required', 'string', 'exists:type_congers,id'],
             'date_debut' => ['required', 'date', 'after_or_equal:' . Carbon::now()->toDateString()], // La date de début doit être dans le futur ou aujourd'hui
             'date_fin' => ['required', 'date', 'after_or_equal:date_debut'], // La date de fin doit être après la date de début
             'motif' => ['required', 'string'],
         ]);
-        
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        
+
         // Calcul automatique du nombre de jours
         $dateDebut = Carbon::parse($request->input('date_debut'));
         $dateFin = Carbon::parse($request->input('date_fin'));
@@ -87,7 +87,7 @@ class CongerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
         $conger = Conger::find($id);
 
@@ -104,11 +104,11 @@ class CongerController extends Controller
             'date_fin' => ['required', 'date', 'after_or_equal:date_debut'], // La date de fin doit être après la date de début
             'motif' => ['required', 'string'],
         ]);
-        
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 422);
         }
-        
+
         // Calcul automatique du nombre de jours
         $dateDebut = Carbon::parse($request->input('date_debut'));
         $dateFin = Carbon::parse($request->input('date_fin'));
@@ -139,8 +139,8 @@ class CongerController extends Controller
         return response()->json(['message' => 'Conger deleted successfully'], 200);
     }
 
-
-    public function acceptConger($id){
+    public function acceptConger($id)
+    {
         $conger = Conger::find($id);
 
         // dd($conger);
@@ -152,7 +152,7 @@ class CongerController extends Controller
             return response()->json(['message' => 'Conger already accepted'], 400);
         }
         //recheche de l'employé
-        $user=  User::find($conger->user_id);
+        $user = User::find($conger->user_id);
 
         //Verification si l'employe a deja un conger en cours
         if ($user->est_en_conge == 1) {
@@ -161,11 +161,10 @@ class CongerController extends Controller
 
         // Si le nombre de conger annuel est atteint
         if ($user->nombre_jours_conges == 0) {
-          return response()->json(['message' => 'No conger available'], 400);   
+            return response()->json(['message' => 'No conger available'], 400);
         }
 
-
-        //Verification si le type de conger est specifique 
+        //Verification si le type de conger est specifique
         if ($conger->type_conge_id == 1) {
             $user->nombre_jours_conges = $user->nombre_jours_conges - $conger->nombre_jours;
             //Mise a jour de l'etat de l'employé en statut en cours de conger
@@ -193,7 +192,6 @@ class CongerController extends Controller
         $user->save();
         $conger->statut = 'accepte';
         $conger->save();
-
 
         return response()->json(['message' => 'Conger accepted successfully'], 200);
     }
