@@ -49,7 +49,7 @@ class VenteController extends Controller
             $produitInfo = Produit::find($produit['produit_id']);
             if ($produitInfo->quantite < $produit['quantite']) {
                 return response()->json([
-                    'message' => 'Il ne rest que ' . $produitInfo->quantite . ' ' . $produitInfo->nom,
+                    'message' => 'Il ne reste que ' . $produitInfo->quantite . ' ' . $produitInfo->nom,
                 ], 400);
             }
         }
