@@ -15,7 +15,11 @@ class ApprovisionnementController extends Controller
      */
     public function index()
     {
-        //
+        $approvisionnements = Approvisionnement::all();
+        if ($approvisionnements->isEmpty()) {
+            return response()->json(['message' => 'No approvisionnements found (vide) '], 404);
+        }
+        return response()->json(Approvisionnement::all());
     }
 
     /**
@@ -70,9 +74,13 @@ class ApprovisionnementController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Approvisionnement $approvisionnement)
+    public function show($id)
     {
-        //
+        $approvisionnement = Approvisionnement::find($id);
+        if (!$approvisionnement) {
+            return response()->json(['message' => 'Approvisionnement not found'], 404);
+        }
+        return response()->json($approvisionnement);
     }
 
     /**
@@ -86,16 +94,87 @@ class ApprovisionnementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Approvisionnement $approvisionnement)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
     {
-        //
+        // Valider les données entrantes
+        $validator = Validator::make($request->all(), [
+            'fournisseur_id' => 'required|exists:fournisseurs,id',
+            'montant_approvisionnement' => 'required|numeric',
+            'produits' => 'required|array',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $app = Approvisionnement::findOrFail($id);
+
+        // Mettre à jour les informations de l'approvisionnement
+        $app->update([
+            'fournisseur_id' => $request->fournisseur_id,
+            'montant_approvisionnement' => $request->montant_approvisionnement,
+        ]);
+
+        // Gestion des produits associés à cet approvisionnement
+        foreach ($request->produits as $produit) {
+            $produitInfo = Produit::find($produit['produit_id']);
+
+            if (!$produitInfo) {
+                continue; // Si le produit n'existe pas, passer au suivant
+            }
+
+            $historiqueApprovisionnement = Approvisionnement_produit::where('approvisionnement_id', $app->id)
+                ->where('produit_id', $produit['produit_id'])
+                ->first();
+
+            if ($historiqueApprovisionnement) {
+                // Si le produit est déjà dans l'historique, ajuster la quantité
+                $ancienneQuantite = $historiqueApprovisionnement->quantite;
+                $produitInfo->quantite -= $ancienneQuantite; // Retirer l'ancienne quantité du stock
+
+                // Mettre à jour la nouvelle quantité dans le stock
+                $produitInfo->quantite += $produit['quantite'];
+                $produitInfo->save();
+
+                // Mettre à jour la quantité dans l'historique d'approvisionnement
+                $historiqueApprovisionnement->update([
+                    'quantite' => $produit['quantite'],
+                ]);
+            } else {
+                // Si le produit n'est pas dans l'historique, ajouter le produit avec la nouvelle quantité
+                $produitInfo->quantite += $produit['quantite'];
+                $produitInfo->save();
+
+                // Enregistrer dans l'historique d'approvisionnement
+                Approvisionnement_produit::create([
+                    'approvisionnement_id' => $app->id,
+                    'produit_id' => $produit['produit_id'],
+                    'quantite' => $produit['quantite'],
+                ]);
+            }
+        }
+
+        return response()->json([
+            'message' => 'Approvisionnement mis à jour avec succès',
+            'data' => $app,
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Approvisionnement $approvisionnement)
+    public function destroy($id)
     {
-        //
+
+        $app = Approvisionnement::find($id);
+        if (!$app) {
+            return response()->json(['message' => 'Approvisionnement not found'], 404);
+        }
+        $app->delete();
+        return response()->json(['message' => 'Approvisionnement deleted successfully'], 200);
+
     }
 }
