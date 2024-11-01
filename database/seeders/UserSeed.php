@@ -10,6 +10,7 @@ use App\Models\Fournisseur;
 use App\Models\Paiment;
 use App\Models\Poste;
 use App\Models\Produit;
+use App\Models\Reservation;
 use App\Models\typeConger;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -90,5 +91,8 @@ class UserSeed extends Seeder
 
         //Client toiles factory
         ClientToiles::factory(10)->create();
+
+        //Reservation factory
+        Reservation::factory(10)->create();
     }
 }

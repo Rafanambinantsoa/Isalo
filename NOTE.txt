@@ -125,3 +125,7 @@ Categorie chambre
  Services_Additionnels ??? 
  Je comprend pas  c'est quoi cette putin d'attribus dans la clien ramirandava 
  
+
+ ---------------------------------------
+ BREF ON ENTRE DANS LE VIF DU SUJET   
+ La reservation elle meme avec l'etat des chambre , la date  , les crons ,   la ne peut pas etre reserever s'il est occuper ,  generation des facture a la fin  ,  avec toute ces depenses
