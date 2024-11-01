@@ -20,12 +20,12 @@ class ChambreFactory extends Factory
         $id_categorie_chambre = CategorieChambre::inRandomOrder()->first()->id;
 
         return [
-            'Numero_chambre' => uniqid(),
+            'numero_chambre' => uniqid(),
             'id_categorie_chambre' => $id_categorie_chambre,
-            'Nombre_lits' => fake()->numberBetween(1, 4),
-            'Type_Lits' => fake()->word(),
-            'Prix_Nuitée' => fake()->numberBetween(100, 500),
-            'Etat_chambre' => fake()->word(),
+            'nombre_lits' => fake()->numberBetween(1, 4),
+            'type_lits' => fake()->word(),
+            'prix_nuitee' => fake()->numberBetween(100, 500),
+            'etat_chambre' => fake()->word(),
         ];
     }
 }

@@ -11,11 +11,11 @@ class Chambre extends Model
     use HasFactory;
 
     protected $fillable = [
-        'Numero_chambre',
+        'numero_chambre',
         'id_categorie_chambre',
-        'Nombre_lits',
-        'Type_lits',
-        'Prix_Nuitée',
-        'Etat_chambre',
+        'nombre_lits',
+        'type_lits',
+        'prix_nuitee',
+        'etat_chambre',
     ];
 }
