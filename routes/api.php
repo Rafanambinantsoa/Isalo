@@ -4,7 +4,10 @@ use App\Http\Controllers\ApprovisionnementController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\CategorieChambreController;
 use App\Http\Controllers\CategorieController;
+use App\Http\Controllers\ChambreController;
+use App\Http\Controllers\ClientToilesController;
 use App\Http\Controllers\CongerController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\MethodePaimentController;
@@ -58,14 +61,10 @@ Route::resource('ventes', VenteController::class);
 // Related route for Stock
 Route::resource('stocks', ApprovisionnementController::class);
 
-// //test
-// Route::get('/test-email', function () {
-//     Mail::raw('Test email body', function ($message) {
-//         $message->to('tsukasashishiosama@gmail.com')
-//             ->subject('Test Email');
-//     });
-
-//     return 'Email sent!';
-// });
-// Route::get('/test', [TestController::class, 'index']);
+//Related route for Chambre
+Route::resource('chambrecategorie', CategorieChambreController::class);
+Route::resource('chambres', ChambreController::class);
 Route::post('/uploads', [TestController::class, 'multiUpload']);
+
+//Related route for Client toiles
+Route::resource('clienttoiles', ClientToilesController::class);

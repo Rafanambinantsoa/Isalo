@@ -97,7 +97,35 @@ A faire demain :
  - reapprovisionnement  ( Fournisseur )
 
 
- Nombre de postes
+Nombre de postes
  Nombre Employe ( ankoatra admin )
  nbre conger 
  
+
+
+ Vente mode de paiement atao statique 
+Cash , 
+Mobile money 
+
+Stock  3 
+- Restaurant 
+- Stock  dans le Restaurant 
+- Stock produit tsotra ( biere et tout le reste )
+
+
+
+Categorie chambre
+
+
+---------------------------------
+ Categorie de chambre   done
+ Occupation_Historique ( Pour les chambres ) done 
+
+ ---------------------------------
+ Services_Additionnels ??? 
+ Je comprend pas  c'est quoi cette putin d'attribus dans la clien ramirandava 
+ 
+
+ ---------------------------------------
+ BREF ON ENTRE DANS LE VIF DU SUJET   
+ La reservation elle meme avec l'etat des chambre , la date  , les crons ,   la ne peut pas etre reserever s'il est occuper ,  generation des facture a la fin  ,  avec toute ces depenses
