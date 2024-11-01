@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\CategorieChambreController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ChambreController;
+use App\Http\Controllers\ClientToilesController;
 use App\Http\Controllers\CongerController;
 use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\MethodePaimentController;
@@ -64,3 +65,6 @@ Route::resource('stocks', ApprovisionnementController::class);
 Route::resource('chambrecategorie', CategorieChambreController::class);
 Route::resource('chambres', ChambreController::class);
 Route::post('/uploads', [TestController::class, 'multiUpload']);
+
+//Related route for Client toiles
+Route::resource('clienttoiles', ClientToilesController::class);

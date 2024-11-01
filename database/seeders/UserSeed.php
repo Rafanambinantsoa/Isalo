@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Categorie;
 use App\Models\CategorieChambre;
 use App\Models\Chambre;
+use App\Models\ClientToiles;
 use App\Models\Fournisseur;
 use App\Models\Paiment;
 use App\Models\Poste;
@@ -86,5 +87,8 @@ class UserSeed extends Seeder
 
         //Chambre factory
         Chambre::factory(10)->create();
+
+        //Client toiles factory
+        ClientToiles::factory(10)->create();
     }
 }

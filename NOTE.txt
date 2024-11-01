@@ -1,0 +1,127 @@
+Dans les dates ajoute de validation genre pas de date pssee queque chose dans le genre 
+Entre le debut et la fin  ,  akout une sorte de coherence
+Nombre de jour ( automatiquement , avec certains  valeur genre par rapports au date precedent )
+
+
+Pour toute les route put ou patch , tu pourrais genre mettre une sorte de condition s'il veullent tout simplement changer une seule chose  ,  adapte ton api pour ca  stp
+
+
+Lors de l'acceptation du demande de conger  , on doit mettre a joutr le nombre de jour de conger 
+et ajouter une sorte de limite de demande en matiere de jour
+
+Mise a jour dans la partie  ty de conger en ajoutant dun attribus nombre de jour max autoriser pour le type de conger selectionner 
+
+Un conger accepter ne pourrait plus etre modifier 
+
+Lors de la creation  d'un conger on doit donner aux admin de lui donner le choix gerne un conger specifique  genre il met en place tape lui meme  le nombre de jour ou bien juste en choisir un et on verra 
+il veut ecrire manuelement le nombre de jours de conger ou bien en choisir ce que est deja c'est a dire le
+les type de conger deja dispo
+
+Si l'user se penche vers la solution specifique , dans l'acceptation on devrait mettre une sorte de validation pour ca  : 
+genre on vas mettre par defaut  l'id  0 du type 
+
+DEV FRONT 
+Raha specifique de specifique de mametraka date de debut sy fin , 
+Sinon miselectionne  @ le liste  anle typeconge de  asina date de debut vue que tsy tode mand automatique le  date de fin par rapports  @ le  isan daty ao 
+
+
+A faire demain 
+
+Refa misy conger valider en cours   ,  normalement tsy tokony afaka manao demande conger 
+
+Les congers valider ne devrait etre pas modifiables 
+
+Un fois les conger terminer on les met dans une autre table la ou ils vont etre historises 
+
+
+
+
+CRON 
+Mise a jour automatique  de l'attributs   est_en_conger ( )  ,  une fois la date depasseer  ( conger  ) 
+
+Now 
+
+
+Test avec le PC d'un autre demain le cron qui everyMinute , ok  ?  
+done 
+
+Emprunt
+- Employe 
+- Type
+- Montant
+- Date
+- Nombre de remboursement
+- Montant remboursement mensuel
+- Description
+
+Avance 
+- Montant
+- Date 
+- Description
+
+
+Attirubut paiments insuffisant  A VERIFIER 
+
+Gerer les uploads  de plusieurs pieces jointes
+
+
+Pour la table paiement, voici les attributs que tu devrais inclure pour bien suivre les transactions financières avec les fournisseurs :
+
+ID_Paiement : Identifiant unique du paiement (de type Integer).
+Fournisseur_ID : Référence à l'identifiant du fournisseur lié à ce paiement (de type Integer).
+Montant : Montant total du paiement effectué (de type Decimal).
+Mode_de_paiement : Le mode de paiement utilisé (espèces, mobile money, crédit, etc.) (de type Enum).
+Date_Paiement : La date à laquelle le paiement a été effectué (de type DateTime).
+Date_Remoursement : Si c'est un crédit, la date de remboursement (de type DateTime), sinon peut rester nul.
+Statut_Paiement : Statut du paiement (payé, partiellement payé, non payé) (de type Enum).
+Explication des attributs :
+ID_Paiement : Sert à identifier chaque transaction de paiement de manière unique.
+Fournisseur_ID : Relie chaque paiement à un fournisseur spécifique pour un suivi détaillé.
+Montant : Le montant que tu as payé ou que tu dois encore payer au fournisseur.
+Mode_de_paiement : Précise si le paiement est en espèces, par virement bancaire, à crédit, etc.
+Date_Paiement : La date précise du paiement.
+Date_Remoursement : Si le paiement est à crédit, elle indique la date prévue ou réelle du remboursement.
+Statut_Paiement : Te permet de savoir si le paiement a été entièrement réglé ou s'il reste dû.
+Avec ces attributs, ta table de paiement sera bien structurée et te permettra de suivre les paiements de manière efficace et transparente.
+
+A FAIRE CE SOIR 
+
+Pour la mise a jour des ventes il faut que ce soit synchrone au quantite 
+dans le stock ,  genre si on le diminue le stock devrait augmenter  et vice - versa 
+
+
+ - Multiple uploads (  Les pieces ) done 
+
+A faire demain : 
+
+ - reapprovisionnement  ( Fournisseur )
+
+
+Nombre de postes
+ Nombre Employe ( ankoatra admin )
+ nbre conger 
+ 
+
+
+ Vente mode de paiement atao statique 
+Cash , 
+Mobile money 
+
+Stock  3 
+- Restaurant 
+- Stock  dans le Restaurant 
+- Stock produit tsotra ( biere et tout le reste )
+
+
+
+Categorie chambre
+
+
+---------------------------------
+ Categorie de chambre   done
+ Occupation_Historique ( Pour les chambres ) done 
+
+ ---------------------------------
+ Services_Additionnels ??? 
+ Je comprend pas  c'est quoi cette putin d'attribus dans la clien ramirandava 
+ 
