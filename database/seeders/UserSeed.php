@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Categorie;
+use App\Models\CategorieChambre;
+use App\Models\Chambre;
 use App\Models\Fournisseur;
 use App\Models\Paiment;
 use App\Models\Poste;
@@ -78,5 +80,11 @@ class UserSeed extends Seeder
             'poste_id' => $postes->random()->id,
             'password' => bcrypt('admin'),
         ]);
+
+        //Categorie chambre factory
+        CategorieChambre::factory(10)->create();
+
+        //Chambre factory
+        Chambre::factory(10)->create();
     }
 }
