@@ -13,6 +13,7 @@ use App\Http\Controllers\FournisseurController;
 use App\Http\Controllers\MethodePaimentController;
 use App\Http\Controllers\PosteController;
 use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\TypeCongerController;
 use App\Http\Controllers\UserController;
@@ -68,3 +69,6 @@ Route::post('/uploads', [TestController::class, 'multiUpload']);
 
 //Related route for Client toiles
 Route::resource('clienttoiles', ClientToilesController::class);
+
+//Related route for reservation
+Route::resource('reservations', ReservationController::class);

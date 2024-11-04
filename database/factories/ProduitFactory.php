@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use App\Models\Categorie;
-use App\Models\Fournisseur;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,14 +18,12 @@ class ProduitFactory extends Factory
     public function definition(): array
     {
         $categories = Categorie::inRandomOrder()->first();
-        $fournisseurs = Fournisseur::inRandomOrder()->first();
 
         return [
             'nom' => fake()->text(10),
             'categorie_id' => $categories->id,
             'quantite' => fake()->numberBetween(1, 10),
             'prix' => fake()->numberBetween(100, 1000),
-            'fournisseur_id' => $fournisseurs->id,
         ];
     }
 }

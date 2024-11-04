@@ -16,5 +16,8 @@ class Reservation extends Model
         'date_arrive',
         'date_depart',
         'statut',
+        'avance_requise',
+        'is_avance_paid',
+        'prix_total',
     ];
 }
