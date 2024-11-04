@@ -21,9 +21,6 @@ return new class extends Migration
 
             $table->bigInteger('prix');
 
-            $table->unsignedBigInteger('fournisseur_id');
-            $table->foreign('fournisseur_id')->references('id')->on('fournisseurs')->onDelete('cascade');
-
             $table->timestamps();
 
         });

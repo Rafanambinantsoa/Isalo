@@ -39,7 +39,6 @@ class ProduitController extends Controller
             'categorie_id' => ['required', 'integer', 'exists:categories,id'],
             'quantite' => ['required', 'integer'],
             'prix' => ['required', 'integer'],
-            'fournisseur_id' => ['required', 'integer', 'exists:fournisseurs,id'],
         ]);
 
         if ($validator->fails()) {
@@ -84,7 +83,6 @@ class ProduitController extends Controller
             'categorie_id' => ['required', 'integer', 'exists:categories,id'],
             'quantite' => ['required', 'integer'],
             'prix' => ['required', 'integer'],
-            'fournisseur_id' => ['required', 'integer', 'exists:fournisseurs,id'],
         ]);
 
         if ($validator->fails()) {

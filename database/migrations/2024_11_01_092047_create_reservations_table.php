@@ -23,6 +23,9 @@ return new class extends Migration
             $table->date('date_depart');
 
             $table->string('statut')->default('reserved');
+            $table->bigInteger('avance_requise');
+            $table->boolean('is_avance_paid')->default(false);
+            $table->bigInteger('prix_total');
 
             $table->timestamps();
         });
