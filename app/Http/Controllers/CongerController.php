@@ -98,7 +98,7 @@ class CongerController extends Controller
 
         // Validation
         $validator = Validator::make($request->all(), [
-            'user_id' => ['required', 'string'],
+            'user_id' => ['required', 'numeric'],
             'type_conger_id' => ['required', 'string', 'exists:type_congers,id'],
             'date_debut' => ['required', 'date', 'after_or_equal:' . Carbon::now()->toDateString()], // La date de début doit être dans le futur ou aujourd'hui
             'date_fin' => ['required', 'date', 'after_or_equal:date_debut'], // La date de fin doit être après la date de début
