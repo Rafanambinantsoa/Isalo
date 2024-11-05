@@ -74,7 +74,7 @@ class FournisseurController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nom' => ['required', 'string'],
-            'contact' => ['required', 'numeric'],
+            'contact' => ['required', 'string'],
             'adresse' => ['required', 'string'],
         ]);
 

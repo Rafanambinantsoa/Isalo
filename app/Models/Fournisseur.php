@@ -12,6 +12,5 @@ class Fournisseur extends Model
         'nom',
         'adresse',
         'contact',
-        'paiment_id',
     ];
 }
