@@ -35,9 +35,8 @@ class FournisseurController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nom' => ['required', 'string'],
-            'contact' => ['required', 'numeric'],
+            'contact' => ['required', 'string'],
             'adresse' => ['required', 'string'],
-            'paiment_id' => ['required', 'numeric', 'exists:paiments,id'],
         ]);
 
         if ($validator->fails()) {
@@ -77,7 +76,6 @@ class FournisseurController extends Controller
             'nom' => ['required', 'string'],
             'contact' => ['required', 'numeric'],
             'adresse' => ['required', 'string'],
-            'paiment_id' => ['required', 'numeric', 'exists:paiments,id'],
         ]);
 
         if ($validator->fails()) {
@@ -97,7 +95,7 @@ class FournisseurController extends Controller
     public function destroy($id)
     {
         $fournisseur = Fournisseur::find($id);
-        if (!$fournisseur){
+        if (!$fournisseur) {
             return response()->json(['message' => 'Fournisseur not found'], 404);
         }
         $fournisseur->delete();

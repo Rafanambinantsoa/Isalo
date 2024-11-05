@@ -22,8 +22,6 @@ return new class extends Migration
             $table->string('nom');
             $table->string('contact');
             $table->string('adresse');
-            $table->unsignedBigInteger('paiment_id');
-            $table->foreign('paiment_id')->references('id')->on('paiments')->onDelete('cascade');
             $table->timestamps();
         });
     }

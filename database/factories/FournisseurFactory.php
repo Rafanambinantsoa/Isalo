@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Paiment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,13 +16,11 @@ class FournisseurFactory extends Factory
      */
     public function definition(): array
     {
-        $paiment = Paiment::all()->random();
 
         return [
             'nom' => fake()->word(),
             'adresse' => fake()->address(),
             'contact' => fake()->phoneNumber(),
-            'paiment_id' => $paiment->id,
         ];
 
     }
