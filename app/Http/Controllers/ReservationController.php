@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chambre;
+use App\Models\PaimentReservation;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -75,11 +76,15 @@ class ReservationController extends Controller
         // Calculate the difference in days
         $nombreDeNuits = $dateDepart->diffInDays($dateArrive);
 
+        if ($nombreDeNuits < 1) {
+            $nombreDeNuits = $nombreDeNuits * -1;
+        }
+
         // Calculate the total price
         $prixTotal = $chambre->prix_nuitee * $nombreDeNuits;
 
         //Avance requise selon la saison
-        $avance = $saison == "basse" ? ($chambre->prix_nuitee * 20) / 100 : ($chambre->prix_nuitee * 50) / 100;
+        $avance = $saison == "basse" ? ($prixTotal * 20) / 100 : ($prixTotal * 50) / 100;
 
         //Creation de la reservation
         $reservation = Reservation::create([
@@ -95,6 +100,16 @@ class ReservationController extends Controller
         //Mise a jour de l'etat de la chambre
         $chambre->etat_chambre = "occupee";
         $chambre->save();
+
+        //Enregistrement du paiment du client
+        $is_avance_paid = $request->is_avance_paid;
+
+        PaimentReservation::create([
+            'reservation_id' => $reservation->id,
+            'client_id' => $request->Client_id,
+            'montant' => $prixTotal,
+            'montant_restant' => $prixTotal - $avance,
+        ]);
 
         return response()->json([
             'message' => "Reservation effectuee avec succes",
@@ -185,12 +200,13 @@ class ReservationController extends Controller
 
         // Calcul du nombre de nuits
         $nombreDeNuits = $dateDepart->diffInDays($dateArrive);
+        $nombreDeNuits = $nombreDeNuits < 0 ? $nombreDeNuits * -1 : $nombreDeNuits;
 
         // Calcul du prix total
         $prixTotal = $chambre->prix_nuitee * $nombreDeNuits;
 
         // Avance requise selon la saison
-        $avance = $saison == "basse" ? ($chambre->prix_nuitee * 20) / 100 : ($chambre->prix_nuitee * 50) / 100;
+        $avance = $saison == "basse" ? ($prixTotal * 20) / 100 : ($prixTotal * 50) / 100;
 
         // Mise à jour de la réservation
         $reservation->update([
@@ -207,6 +223,16 @@ class ReservationController extends Controller
         $chambre->etat_chambre = "occupee";
         $chambre->save();
 
+        // Enregistrement du paiment du client
+        $paiment = PaimentReservation::where('reservation_id', $id)->first();
+
+        $paiment->update([
+            'reservation_id' => $id,
+            'client_id' => $request->Client_id,
+            'montant' => $prixTotal,
+            'montant_restant' => $prixTotal - $avance,
+        ]);
+
         return response()->json([
             'message' => "Réservation mise à jour avec succès",
         ]);
@@ -215,39 +241,73 @@ class ReservationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-   public function delete($id)
-{
-    $reservation = Reservation::find($id);
+    public function destroy($id)
+    {
+        // Trouver la réservation
+        $reservation = Reservation::find($id);
 
-    if (!$reservation) {
+        // Vérifier si la réservation existe
+        if (!$reservation) {
+            return response()->json([
+                'message' => 'Réservation introuvable.',
+            ], 404); // 404 Not Found
+        }
+
+        // Définir la date d'arrivée et l'heure actuelle
+        $dateArrivee = Carbon::parse($reservation->date_arrive);
+        $now = Carbon::now();
+
+        // Calculer la différence en heures
+        $diff = $dateArrivee->diffInHours($now);
+        if ($diff < 0) {
+            $diff = $diff * -1;
+        }
+
+        // Vérifier que l'annulation n'est pas effectuée moins de 24 heures avant la date d'arrivée
+        if ($diff < 24) {
+            return response()->json([
+                'message' => 'L\'annulation ne peut pas être effectuée moins de 24 heures avant la date d\'arrivée.',
+            ], 403); // 403 Forbidden
+        }
+
+        $avance = $reservation->avance_requise; // Montant de l'avance
+        $penalite = 0;
+
+        // Si l'annulation est faite moins de 48 heures avant, appliquer une pénalité de 20%
+        if ($diff < 48) {
+            $penalite = $avance * 0.20; // Pénalité de 20% de l'avance
+            $avance -= $penalite; // Réduire l'avance par la pénalité
+        }
+
+        // Mettre à jour l'état de la chambre
+        $chambre = Chambre::find($reservation->Chambre_id);
+        if ($chambre) {
+            $chambre->etat_chambre = "disponible";
+            $chambre->save();
+        }
+
+        // Enregistrement du paiement du client
+        $paiment = PaimentReservation::where('reservation_id', $id)->first();
+        if ($paiment) {
+            $paiment->update([
+                'montant' => $penalite, // Pénalité si applicable
+                'montant_restant' => 0, // Montant restant après pénalité
+                'type' => 'penalite', // Type en fonction de la pénalité
+            ]);
+            $paiment->save();
+        }
+
+        // Répondre avec succès
+        $message = $penalite > 0
+        ? "Réservation annulée avec succès. Une pénalité de $penalite a été appliquée. Montant remboursé : $avance."
+        : "Réservation annulée avec succès. Le montant de l'avance a été remboursé.";
+
+        // Supprimer la réservation
+        $reservation->delete();
+
         return response()->json([
-            'message' => 'Réservation introuvable.',
-        ], 404); // 404 Not Found
+            'message' => $message,
+        ]);
     }
-
-    $dateArrivee = Carbon::parse($reservation->date_arrive);
-    $now = Carbon::now();
-
-    // Vérifier que l'annulation se fait au moins 24 heures avant la date d'arrivée
-    if ($dateArrivee->diffInHours($now) < 24) {
-        return response()->json([
-            'message' => 'L\'annulation doit être effectuée au moins 24 heures avant la date d\'arrivée.',
-        ], 403); // 403 Forbidden
-    }
-
-    // Si la contrainte est respectée, supprimer la réservation
-    $reservation->delete();
-
-    // Mise à jour de l'état de la chambre
-    $chambre = Chambre::find($reservation->Chambre_id);
-    if ($chambre) {
-        $chambre->etat_chambre = "libre";
-        $chambre->save();
-    }
-
-    return response()->json([
-        'message' => "Réservation annulée avec succès",
-    ]);
-}
 
 }
