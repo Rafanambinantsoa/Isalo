@@ -130,3 +130,14 @@ Categorie chambre
  BREF ON ENTRE DANS LE VIF DU SUJET   
  La reservation elle meme avec l'etat des chambre , la date  , les crons ,   la ne peut pas etre reserever s'il est occuper ,  generation des facture a la fin  ,  avec toute ces depenses
  
+
+ ---------------------------------------
+ Lors de l'annulation d'un reservation il y aura une sorte de penalite 
+
+FRONT 
+Lors de la creation d'un reserevation vous le prix devrait s'afficher dynamiquement 
+Genre ce que le client doit payer et aussi son avance   
+
+
+Mise en place de paimentsReservation  pour traquer les transaction dans le 
+reserevation

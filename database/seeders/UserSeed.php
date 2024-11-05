@@ -7,7 +7,6 @@ use App\Models\CategorieChambre;
 use App\Models\Chambre;
 use App\Models\ClientToiles;
 use App\Models\Fournisseur;
-use App\Models\Paiment;
 use App\Models\Poste;
 use App\Models\Produit;
 use App\Models\Reservation;
@@ -22,8 +21,6 @@ class UserSeed extends Seeder
      */
     public function run(): void
     {
-        //Factory paiments
-        Paiment::factory(10)->create();
 
         //Factory type fournisseurs
         Fournisseur::factory(10)->create();
