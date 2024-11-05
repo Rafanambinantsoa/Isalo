@@ -14,11 +14,11 @@ class ProduitController extends Controller
      */
     public function index()
     {
-        $all = Produit::all();
+        $all = Produit::with('categorie')->get();
         if ($all->isEmpty()) {
             return response()->json(['message' => 'No products found (vide) '], 404);
         }
-        return response()->json(Produit::all());
+        return response()->json($all);
     }
 
     /**
