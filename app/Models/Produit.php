@@ -21,4 +21,9 @@ class Produit extends Model
     {
         return $this->belongsTo(Categorie::class);
     }
+
+    public function approvisionement_produit()
+    {
+        return $this->hasMany(Approvisionnement_produit::class);
+    }
 }

@@ -16,10 +16,24 @@ class ApprovisionnementController extends Controller
     public function index()
     {
         $approvisionnements = Approvisionnement::with('fournisseur')->get();
+
+        // Vérifie si la collection est vide
         if ($approvisionnements->isEmpty()) {
-            return response()->json(['message' => 'No approvisionnements found (vide) '], 404);
+            return response()->json(['message' => 'No approvisionnements found (vide)'], 404);
         }
-        return response()->json($approvisionnements);
+
+        // Pour chaque approvisionnement, récupérer les produits associés
+        $all = $approvisionnements->map(function ($approvisionnement) {
+            $produits = Approvisionnement_produit::with('produit')->where('approvisionnement_id', $approvisionnement->id)->get();
+            return [
+                'approvisionnement' => $approvisionnement,
+                'produits' => $produits,
+            ];
+        });
+
+        return response()->json([
+            'approvisionnements' => $all,
+        ], 200);
     }
 
     /**
