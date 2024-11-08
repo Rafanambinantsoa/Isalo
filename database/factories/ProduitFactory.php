@@ -23,6 +23,7 @@ class ProduitFactory extends Factory
             'nom' => fake()->text(10),
             'categorie_id' => $categories->id,
             'prix' => fake()->numberBetween(100, 1000),
+            'prix_vente' => fake()->numberBetween(100, 1000),
         ];
     }
 }
