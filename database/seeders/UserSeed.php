@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Approvisionnement;
-use App\Models\Approvisionnement_produit;
 use App\Models\Categorie;
 use App\Models\CategorieChambre;
 use App\Models\Chambre;
@@ -94,23 +92,23 @@ class UserSeed extends Seeder
         //Reservation factory
         Reservation::factory(10)->create();
 
-        //Approvisionnement test
-        $approviionement = Approvisionnement::create([
-            'fournisseur_id' => 1,
-            'montant_approvisionnement' => 1000,
-        ]);
+        // //Approvisionnement test
+        // $approviionement = Approvisionnement::create([
+        //     'fournisseur_id' => 1,
+        //     'montant_approvisionnement' => 1000,
+        // ]);
 
-        Approvisionnement_produit::create([
-            'approvisionnement_id' => $approviionement->id,
-            'produit_id' => 1,
-            'quantite' => 5,
-        ]);
+        // Approvisionnement_produit::create([
+        //     'approvisionnement_id' => $approviionement->id,
+        //     'produit_id' => 1,
+        //     'quantite' => 5,
+        // ]);
 
-        Approvisionnement_produit::create([
-            'approvisionnement_id' => $approviionement->id,
-            'produit_id' => 2,
-            'quantite' => 5,
-        ]);
+        // Approvisionnement_produit::create([
+        //     'approvisionnement_id' => $approviionement->id,
+        //     'produit_id' => 2,
+        //     'quantite' => 5,
+        // ]);
 
     }
 }

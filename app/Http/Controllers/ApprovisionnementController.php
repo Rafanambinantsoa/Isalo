@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Approvisionnement;
-use App\Models\Approvisionnement_produit;
-use App\Models\Produit;
+use App\Models\Historique_approvisionnements_toiles;
+use App\Models\StockToile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -24,7 +24,7 @@ class ApprovisionnementController extends Controller
 
         // Pour chaque approvisionnement, récupérer les produits associés
         $all = $approvisionnements->map(function ($approvisionnement) {
-            $produits = Approvisionnement_produit::with('produit')->where('approvisionnement_id', $approvisionnement->id)->get();
+            $produits = Historique_approvisionnements_toiles::with('produit')->where('approvi_id', $approvisionnement->id)->get();
             return [
                 'approvisionnement' => $approvisionnement,
                 'produits' => $produits,
@@ -58,29 +58,40 @@ class ApprovisionnementController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-
+        //
         $app = Approvisionnement::create([
             'fournisseur_id' => $request->fournisseur_id,
             'montant_approvisionnement' => $request->montant_approvisionnement,
         ]);
 
-        //Ajouter les produits dans la base de données stock
+        //Ajoute dans la table stock_toile
         foreach ($request->produits as $produit) {
-            $produitInfo = Produit::find($produit['produit_id']);
-            $produitInfo->quantite += $produit['quantite'];
-            $produitInfo->save();
 
-            //enregistrement dans l'historique approvisionnement produit
-            Approvisionnement_produit::create([
-                'approvisionnement_id' => $app->id,
+            //verification s'il y a deja un produit dans la table stock_toile
+            $stock = StockToile::where('produit_id', $produit['produit_id'])->first();
+            if ($stock) {
+                $stock->quantite += $produit['quantite'];
+                $stock->save();
+                continue;
+            }
+
+            StockToile::create([
                 'produit_id' => $produit['produit_id'],
                 'quantite' => $produit['quantite'],
             ]);
+
+            //Historique_approvisionnements_toiles
+            Historique_approvisionnements_toiles::create([
+                'approvi_id' => $app->id,
+                'produit_id' => $produit['produit_id'],
+                'quantite' => $produit['quantite'],
+            ]);
+
         }
 
         return response()->json([
-            'message' => 'Approvisionnement creé avec succès',
-            'data' => $app,
+            'message' => 'Approvisionnement created successfully',
+            'approvisionnement' => $app,
         ]);
 
     }
@@ -94,6 +105,11 @@ class ApprovisionnementController extends Controller
         if (!$approvisionnement) {
             return response()->json(['message' => 'Approvisionnement not found'], 404);
         }
+
+        $approvisionnement->load('fournisseur');
+
+        $approvisionnement->produits = Historique_approvisionnements_toiles::with('produit')->where('approvi_id', $approvisionnement->id)->get();
+
         return response()->json($approvisionnement);
     }
 
@@ -113,67 +129,56 @@ class ApprovisionnementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Valider les données entrantes
+        // Validation des champs
         $validator = Validator::make($request->all(), [
             'fournisseur_id' => 'required|exists:fournisseurs,id',
             'montant_approvisionnement' => 'required|numeric',
-            'produits' => 'required|array',
+            'produits' => 'required',
         ]);
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
 
-        $app = Approvisionnement::findOrFail($id);
+        // Récupérer l'approvisionnement existant
+        $app = Approvisionnement::find($id);
+        if (!$app) {
+            return response()->json(['message' => 'Approvisionnement not found'], 404);
+        }
 
-        // Mettre à jour les informations de l'approvisionnement
+        // Mettre à jour l'approvisionnement
         $app->update([
             'fournisseur_id' => $request->fournisseur_id,
             'montant_approvisionnement' => $request->montant_approvisionnement,
         ]);
 
-        // Gestion des produits associés à cet approvisionnement
+        // Mise à jour des produits et du stock
         foreach ($request->produits as $produit) {
-            $produitInfo = Produit::find($produit['produit_id']);
-
-            if (!$produitInfo) {
-                continue; // Si le produit n'existe pas, passer au suivant
-            }
-
-            $historiqueApprovisionnement = Approvisionnement_produit::where('approvisionnement_id', $app->id)
-                ->where('produit_id', $produit['produit_id'])
-                ->first();
-
-            if ($historiqueApprovisionnement) {
-                // Si le produit est déjà dans l'historique, ajuster la quantité
-                $ancienneQuantite = $historiqueApprovisionnement->quantite;
-                $produitInfo->quantite -= $ancienneQuantite; // Retirer l'ancienne quantité du stock
-
-                // Mettre à jour la nouvelle quantité dans le stock
-                $produitInfo->quantite += $produit['quantite'];
-                $produitInfo->save();
-
-                // Mettre à jour la quantité dans l'historique d'approvisionnement
-                $historiqueApprovisionnement->update([
-                    'quantite' => $produit['quantite'],
-                ]);
+            // Vérifie si le produit est déjà dans le stock
+            $stock = StockToile::where('produit_id', $produit['produit_id'])->first();
+            if ($stock) {
+                // Met à jour la quantité dans le stock
+                $stock->quantite += $produit['quantite'];
+                $stock->save();
             } else {
-                // Si le produit n'est pas dans l'historique, ajouter le produit avec la nouvelle quantité
-                $produitInfo->quantite += $produit['quantite'];
-                $produitInfo->save();
-
-                // Enregistrer dans l'historique d'approvisionnement
-                Approvisionnement_produit::create([
-                    'approvisionnement_id' => $app->id,
+                // Crée une nouvelle entrée si le produit n'est pas encore dans le stock
+                StockToile::create([
                     'produit_id' => $produit['produit_id'],
                     'quantite' => $produit['quantite'],
                 ]);
             }
+
+            // Enregistre l'historique pour chaque produit mis à jour
+            Historique_approvisionnements_toiles::create([
+                'approvi_id' => $app->id,
+                'produit_id' => $produit['produit_id'],
+                'quantite' => $produit['quantite'],
+            ]);
         }
 
         return response()->json([
-            'message' => 'Approvisionnement mis à jour avec succès',
-            'data' => $app,
+            'message' => 'Approvisionnement updated successfully',
+            'approvisionnement' => $app,
         ]);
     }
 
@@ -190,5 +195,15 @@ class ApprovisionnementController extends Controller
         $app->delete();
         return response()->json(['message' => 'Approvisionnement deleted successfully'], 200);
 
+    }
+
+    public function getStockEtat()
+    {
+        //Afficher notre etat de stock  , genre la quantité de chaque produit dans le stock ,
+        $stock = StockToile::all();
+        if ($stock->isEmpty()) {
+            return response()->json(['message' => 'Notre stock est vide '], 404);
+        }
+        return response()->json($stock);
     }
 }

@@ -13,7 +13,6 @@ class Produit extends Model
     protected $fillable = [
         'nom',
         'categorie_id',
-        'quantite',
         'prix',
     ];
 
@@ -22,8 +21,8 @@ class Produit extends Model
         return $this->belongsTo(Categorie::class);
     }
 
-    public function approvisionement_produit()
+    public function Historique_approvisionnements_toiles()
     {
-        return $this->hasMany(Approvisionnement_produit::class);
+        return $this->hasMany(Historique_approvisionnements_toiles::class);
     }
 }
