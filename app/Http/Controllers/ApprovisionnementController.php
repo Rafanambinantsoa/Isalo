@@ -15,11 +15,11 @@ class ApprovisionnementController extends Controller
      */
     public function index()
     {
-        $approvisionnements = Approvisionnement::all();
+        $approvisionnements = Approvisionnement::with('fournisseur')->get();
         if ($approvisionnements->isEmpty()) {
             return response()->json(['message' => 'No approvisionnements found (vide) '], 404);
         }
-        return response()->json(Approvisionnement::all());
+        return response()->json($approvisionnements);
     }
 
     /**

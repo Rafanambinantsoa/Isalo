@@ -141,3 +141,11 @@ Genre ce que le client doit payer et aussi son avance
 
 Mise en place de paimentsReservation  pour traquer les transaction dans le 
 reserevation
+
+
+
+-------------------------------------------------------------
+Mise en place de Stock 
+Ramirandava   =  Magasin de stock  +  Vitrine +  Stock tiko
+
+Toiles 
