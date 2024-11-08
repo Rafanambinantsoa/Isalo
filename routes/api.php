@@ -10,7 +10,6 @@ use App\Http\Controllers\ChambreController;
 use App\Http\Controllers\ClientToilesController;
 use App\Http\Controllers\CongerController;
 use App\Http\Controllers\FournisseurController;
-use App\Http\Controllers\MethodePaimentController;
 use App\Http\Controllers\PosteController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\ReservationController;
@@ -49,7 +48,7 @@ Route::patch('/congers/{id}/accept', [CongerController::class, 'acceptConger']);
 Route::resource('fournisseurs', FournisseurController::class);
 
 //Related route for Methode paiment  fournisseur
-Route::resource('paiments', MethodePaimentController::class);
+// Route::resource('paiments', MethodePaimentController::class);
 
 //Related route  For produit
 Route::resource('categorie', CategorieController::class);
@@ -60,7 +59,8 @@ Route::resource('produits', ProduitController::class);
 Route::resource('ventes', VenteController::class);
 
 // Related route for Stock
-Route::resource('stocks', ApprovisionnementController::class);
+Route::resource('stockstoiles', ApprovisionnementController::class);
+Route::get('etat/stockstoiles', [ApprovisionnementController::class, 'getStockEtat']);
 
 //Related route for Chambre
 Route::resource('chambrecategorie', CategorieChambreController::class);

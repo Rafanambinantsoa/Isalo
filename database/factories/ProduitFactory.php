@@ -22,7 +22,6 @@ class ProduitFactory extends Factory
         return [
             'nom' => fake()->text(10),
             'categorie_id' => $categories->id,
-            'quantite' => fake()->numberBetween(1, 10),
             'prix' => fake()->numberBetween(100, 1000),
         ];
     }
