@@ -13,4 +13,9 @@ class Fournisseur extends Model
         'adresse',
         'contact',
     ];
+
+    public function approvisionnements()
+    {
+        return $this->hasMany(Approvisionnement::class);
+    }
 }

@@ -14,4 +14,14 @@ class Approvisionnement_produit extends Model
         'produit_id',
         'quantite',
     ];
+
+    public function approvisionnement()
+    {
+        return $this->belongsTo(Approvisionnement::class);
+    }
+
+    public function produit()
+    {
+        return $this->belongsTo(Produit::class);
+    }
 }

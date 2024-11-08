@@ -13,4 +13,14 @@ class Approvisionnement extends Model
         'fournisseur_id',
         'montant_approvisionnement',
     ];
+
+    public function approvisionnement_produits()
+    {
+        return $this->hasMany(Approvisionnement_produit::class, 'approvisionnement_id');
+    }
+
+    public function fournisseur()
+    {
+        return $this->belongsTo(Fournisseur::class);
+    }
 }
